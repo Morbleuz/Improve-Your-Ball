@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_improve_your_ball/login.dart';
+import 'package:flutter_improve_your_ball/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Improve Your Ball',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Login(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(),
+      home: Menu(),
     );
   }
 }
