@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_improve_your_ball/login.dart';
 import 'package:flutter_improve_your_ball/menu.dart';
 
 void main() {
@@ -15,7 +16,11 @@ class MyApp extends StatelessWidget {
       title: 'Improve Your Ball',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
-      home: Menu(),
+      initialRoute: '/menu',
+      routes: {
+        '/menu': (context) => const Menu(),
+        '/login': (context) => const Login(),
+      },
     );
   }
 }

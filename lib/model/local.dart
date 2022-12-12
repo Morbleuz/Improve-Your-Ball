@@ -1,3 +1,3 @@
 String usernameLocal = "";
 String passwordLocal = "";
-String localToken = "";
+String localToken = "azd";

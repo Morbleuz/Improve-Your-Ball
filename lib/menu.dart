@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_improve_your_ball/model/local.dart';
 import 'package:flutter_improve_your_ball/modelView/ContainerButtonIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/appbarIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/containerIYP.dart';
 import 'package:graphic/graphic.dart';
+import 'model/local.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -12,6 +14,8 @@ class Menu extends StatefulWidget {
 }
 
 class _Menu extends State<Menu> {
+  final Color rouge = Color.fromRGBO(167, 0, 30, 1);
+  final Color noir = Color.fromRGBO(30, 15, 28, 1);
   double sumTimePlay = 0;
   double sumThreePoints = 2;
   double sumTwoPoints = 9;
@@ -24,21 +28,21 @@ class _Menu extends State<Menu> {
         child: Center(
           child: Column(
             children: <Widget>[
-              const ContainerIYP(
+              ContainerIYP(
                 text: Text(
                   'Bienvenue sur Improve Your Ball ! 🏀',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
-                couleur: Colors.deepOrangeAccent,
+                couleur: rouge,
               ),
-              const ContainerIYP(
+              ContainerIYP(
                 text: Text(
                   'Sur cette application vous allez pouvoir suivre votre progression de basket, en ajoutant vos matchs, vos programmes, vos victoires, \n voir le classement aux travers des différents utilisateurs et bien plus !',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
-                couleur: Colors.orange,
+                couleur: noir,
               ),
               ContainerIYP(
                 text: Text(
@@ -46,10 +50,10 @@ class _Menu extends State<Menu> {
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
-                couleur: Colors.deepOrangeAccent,
+                couleur: rouge,
               ),
               //Section match
-              const ContainerButtonIYP(
+              ContainerButtonIYP(
                 children: [
                   Text(
                     'Vous souhaitez ajouter des matchs ?\n Apuuyez sur le bouton pour accéder au menu match',
@@ -61,10 +65,10 @@ class _Menu extends State<Menu> {
                     child: Text('MATCH'),
                   )
                 ],
-                couleur: Colors.orange,
+                couleur: noir,
               ),
               //Section classement
-              const ContainerButtonIYP(
+              ContainerButtonIYP(
                 children: [
                   Text(
                     'Vous souhaitez voir le classement \n et vous comparez avec les utilisateurs ? \n Appusez le bouton pour accéder au classement',
@@ -76,7 +80,7 @@ class _Menu extends State<Menu> {
                     child: Text('CLASSEMENT'),
                   ),
                 ],
-                couleur: Colors.deepOrangeAccent,
+                couleur: rouge,
               ),
               //Section programme
               const ContainerButtonIYP(
@@ -93,18 +97,10 @@ class _Menu extends State<Menu> {
                 ],
                 couleur: Colors.orange,
               ),
-
-              //Les 3 derniers match
-              //Les stats
-              //Aller à la page match
-              //Aller à la page classement
-              //Aller à la page programme
             ],
           ),
         ),
       ),
-
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
