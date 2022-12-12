@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_improve_your_ball/modelView/ContainerButtonIYP.dart';
+import 'package:flutter_improve_your_ball/modelView/appbarIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/containerIYP.dart';
+import 'package:graphic/graphic.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -9,74 +12,99 @@ class Menu extends StatefulWidget {
 }
 
 class _Menu extends State<Menu> {
+  double sumTimePlay = 0;
+  double sumThreePoints = 2;
+  double sumTwoPoints = 9;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.orange,
-          title: SizedBox(
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Image.asset(
-                'assets/images/logo.png',
-                width: 100,
-                height: 100,
-                color: Colors.white,
+      appBar: AppBarIYP(),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              const ContainerIYP(
+                text: Text(
+                  'Bienvenue sur Improve Your Ball ! 🏀',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                couleur: Colors.deepOrangeAccent,
               ),
-              const Padding(
-                padding: EdgeInsets.all(2),
-                child: Text("Improve Your Ball"),
+              const ContainerIYP(
+                text: Text(
+                  'Sur cette application vous allez pouvoir suivre votre progression de basket, en ajoutant vos matchs, vos programmes, vos victoires, \n voir le classement aux travers des différents utilisateurs et bien plus !',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                couleur: Colors.orange,
               ),
-            ]),
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: const <Widget>[
-                ContainerIYP(
-                  text: Text(
-                    'Bienvenue sur Improve Your Ball ! 🏀',
+              ContainerIYP(
+                text: Text(
+                  'Voici les statistiques de vos 3 dernier matchs :\n Vous avez joué en moyenne $sumTimePlay minutes \n Votre moyenne de 2 points est $sumThreePoints \n Votre moyenne de 2 points $sumTwoPoints',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                couleur: Colors.deepOrangeAccent,
+              ),
+              //Section match
+              const ContainerButtonIYP(
+                children: [
+                  Text(
+                    'Vous souhaitez ajouter des matchs ?\n Apuuyez sur le bouton pour accéder au menu match',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  couleur: Colors.orange,
-                ),
-                ContainerIYP(
-                  text: Text(
-                    'Sur cette application vous allez pouvoir suivre votre progression de basket, en ajoutant vos matchs, vos programmes, vos victoires,etc..',
+                  ElevatedButton(
+                    onPressed: null,
+                    child: Text('MATCH'),
+                  )
+                ],
+                couleur: Colors.orange,
+              ),
+              //Section classement
+              const ContainerButtonIYP(
+                children: [
+                  Text(
+                    'Vous souhaitez voir le classement \n et vous comparez avec les utilisateurs ? \n Appusez le bouton pour accéder au classement',
                     textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  couleur: Colors.grey,
-                )
-                //Description de l'application
-                //Les 3 derniers match
-                //Les stats
-              ],
-            ),
+                  ElevatedButton(
+                    onPressed: null,
+                    child: Text('CLASSEMENT'),
+                  ),
+                ],
+                couleur: Colors.deepOrangeAccent,
+              ),
+              //Section programme
+              const ContainerButtonIYP(
+                children: [
+                  Text(
+                    'Vous souhaitez ajouter des matchs ?\n Apuuyez sur le bouton pour accéder au menu match',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  ElevatedButton(
+                    onPressed: null,
+                    child: Text('MATCH'),
+                  )
+                ],
+                couleur: Colors.orange,
+              ),
+
+              //Les 3 derniers match
+              //Les stats
+              //Aller à la page match
+              //Aller à la page classement
+              //Aller à la page programme
+            ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed, // This is all you need!
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.library_books),
-              label: 'Programme',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.sports_basketball),
-              label: 'Match',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.emoji_events),
-              label: 'Classement',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.network_wifi),
-              label: 'Découvrer',
-            ),
-          ],
-        )
-        // This trailing comma makes auto-formatting nicer for build methods.
-        );
+      ),
+
+      // This trailing comma makes auto-formatting nicer for build methods.
+    );
   }
 }
