@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Improve Your Ball',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
-      initialRoute: '/menu',
+      initialRoute: '/login',
       routes: {
         '/menu': (context) => const Menu(),
         '/login': (context) => const Login(),

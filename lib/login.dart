@@ -14,52 +14,68 @@ class Login extends StatefulWidget {
 class _Login extends State<Login> {
   late TextEditingController _controllerUsername;
   late TextEditingController _controllerPassword;
-
+  String errorMsg = "";
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controllerUsername = TextEditingController();
     _controllerPassword = TextEditingController();
   }
 
+  void connect() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
-      appBar: AppBarIYP(),
+      backgroundColor: Colors.orange,
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const ContainerIYP(
-              text: Text(
-                'Veuillez vous connecter pour accèder à Improve Your Ball.',
-                textAlign: TextAlign.center,
-              ),
-              couleur: Colors.orange),
-          ContainerButtonIYP(children: [
+          Image.asset(
+            'assets/images/logo.png',
+            width: MediaQuery.of(context).size.width - 20,
+            height: MediaQuery.of(context).size.height / 3,
+            color: Colors.white,
+          ),
+          ContainerButtonIYP(couleur: Colors.white, children: [
             const Text(
-              'Username',
+              'Bienvenue !',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              'Connectez-vous pour continuer',
             ),
             TextField(
               controller: _controllerUsername,
-            ),
-            Text(
-              'Mot de passe',
+              decoration: const InputDecoration(
+                hintText: 'Username',
+                icon: Icon(Icons.person),
+              ),
             ),
             TextField(
               obscureText: true,
               controller: _controllerPassword,
+              decoration: const InputDecoration(
+                hintText: 'Mot de passe',
+                icon: Icon(Icons.lock),
+              ),
             ),
-            Padding(
+            Text(
+              errorMsg,
+              style: const TextStyle(color: Colors.red),
+            ),
+            const Padding(
               padding: EdgeInsets.all(10),
             ),
             ElevatedButton(
-              onPressed: null,
-              child: Text('Connexion'),
+              onPressed: connect,
+              child: const Text('Connexion'),
             )
-          ], couleur: Colors.orange)
+          ])
         ],
       )),
     );
