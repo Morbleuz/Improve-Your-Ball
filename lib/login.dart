@@ -4,6 +4,8 @@ import 'package:flutter_improve_your_ball/modelView/ContainerButtonIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/appbarIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/containerIYP.dart';
 
+import 'model/api.dart';
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -22,7 +24,25 @@ class _Login extends State<Login> {
     _controllerPassword = TextEditingController();
   }
 
-  void connect() {
+  ///Permet de naviguer jusqu'au menu
+  void goToMenu() {
+    setState(() {
+      Navigator.popAndPushNamed(context, "/menu");
+    });
+  }
+
+  ///Permet de se connecter à l'API
+  void connect() async {
+    //On stocker les variables localement
+    Local.LocalUsername = _controllerUsername.text;
+    Local.LocalPassword = _controllerPassword.text;
+    await API.recupToken(_controllerUsername.text, _controllerPassword.text);
+    if (Local.localToken.isNotEmpty) {
+      errorMsg = "";
+      goToMenu();
+    } else {
+      errorMsg = API.GetMessage();
+    }
     setState(() {});
   }
 
@@ -64,9 +84,12 @@ class _Login extends State<Login> {
                 icon: Icon(Icons.lock),
               ),
             ),
-            Text(
-              errorMsg,
-              style: const TextStyle(color: Colors.red),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 2),
+              child: Text(
+                errorMsg,
+                style: const TextStyle(color: Colors.red),
+              ),
             ),
             const Padding(
               padding: EdgeInsets.all(10),
