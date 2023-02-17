@@ -60,7 +60,7 @@ class API {
     List<User> users = await getAllUser();
     List<User> usersTrie = [];
     for (User u in users) {
-      if (u.getUsername() == username) {
+      if (u.username == username) {
         usersTrie.add(u);
       }
     }

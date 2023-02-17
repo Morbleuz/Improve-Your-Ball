@@ -1,15 +1,13 @@
 class User {
-  int _id;
-  String _username;
-  List<String> _roles;
-  String _prenom;
-  String _nom;
-  List<Recontre> _rencontres;
-  List<Programme> _programmes;
+  int id;
+  String username;
+  List<String> roles;
+  String prenom;
+  String nom;
+  //List<Recontre> _rencontres;
+  //List<Programme> _programmes;
 
-  User(this._id, this._username, this._roles, this._prenom, this._nom);
-
-  String getUsername() => _username;
+  User(this.id, this.username, this.roles, this.prenom, this.nom);
 
   ///Créer un User en fonction d'un Json
   static User fromJson(Map<String, dynamic> json) {
@@ -20,6 +18,6 @@ class User {
   ///Pour le debug
   @override
   String toString() {
-    return "$_id, $_username, $_roles, $_prenom, $_nom ";
+    return "$id, $username, $roles, $prenom, $nom ";
   }
 }

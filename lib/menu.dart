@@ -16,6 +16,8 @@ class Menu extends StatefulWidget {
 }
 
 class _Menu extends State<Menu> {
+  ///Permet de savoir si l'utilisateur à appuyer sur un bouton de la appBar
+  bool isPush = false;
   final Color rouge = const Color.fromRGBO(167, 0, 30, 1);
   final Color noir = const Color.fromRGBO(30, 15, 28, 1);
   late Column screenDisplay;
@@ -50,13 +52,13 @@ class _Menu extends State<Menu> {
             children: [
               IconButton(
                 onPressed: menuDisplay,
-                icon: Icon(Icons.house),
+                icon: const Icon(Icons.house),
                 splashColor: Colors.white,
                 color: colorButtonMenu,
               ),
               IconButton(
                 onPressed: testDisplay,
-                icon: Icon(Icons.house),
+                icon: const Icon(Icons.troubleshoot_sharp),
                 color: colorButtonTest,
               ),
               IconButton(
@@ -84,13 +86,33 @@ class _Menu extends State<Menu> {
 
   ///Pour afficher le profil de l'utilisateur
   Future<void> profileDisplay() async {
-    loadDisplay();
-    User user = await API.getUserWithUsername(Local.LocalUsername);
-    clearColorButtonBottomAppBar();
-    screenDisplay = Column(
-      children: [Text('Hello, ${user.getUsername()}')],
-    );
+    if (!isPush) {
+      isPush = true;
+      loadDisplay();
+      User user = await API.getUserWithUsername(Local.LocalUsername);
+      clearColorButtonBottomAppBar();
+      screenDisplay = Column(
+        children: [
+          ContainerIYP(
+            text: Text(
+              'Hello, ${user.username} !',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
+            couleur: rouge,
+          ),
+        ],
+      );
+    }
+    isPush = false;
     setState(() {});
+  }
+
+  ///Fonction pour accèder à l'écran Match
+  void goToRencontre() {
+    setState(() {
+      Navigator.pushNamed(context, '/match');
+    });
   }
 
   ///Pour afficher l'écran de chargement
@@ -109,84 +131,71 @@ class _Menu extends State<Menu> {
 
   ///Pour afficher le menu
   Future<void> menuDisplay() async {
-    loadDisplay();
-    await Future.delayed(Duration(milliseconds: 1000));
-    await API.getAllUser();
-    clearColorButtonBottomAppBar();
-    colorButtonMenu = Colors.white;
-    screenDisplay = Column(
-      children: <Widget>[
-        ContainerIYP(
-          text: Text(
-            'Bienvenue sur Improve Your Ball ! 🏀',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, color: Colors.white),
-          ),
-          couleur: rouge,
-        ),
-        ContainerIYP(
-          text: Text(
-            'Sur cette application vous allez pouvoir suivre votre progression de basket, en ajoutant vos matchs, vos programmes, vos victoires, \n voir le classement aux travers des différents utilisateurs et bien plus !',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, color: Colors.white),
-          ),
-          couleur: noir,
-        ),
-        ContainerIYP(
-          text: Text(
-            'Voici les statistiques de vos 3 dernier matchs :\n Vous avez joué en moyenne $sumTimePlay minutes \n Votre moyenne de 2 points est $sumThreePoints \n Votre moyenne de 2 points $sumTwoPoints',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, color: Colors.white),
-          ),
-          couleur: rouge,
-        ),
-        //Section match
-        ContainerButtonIYP(
-          children: [
-            Text(
-              'Vous souhaitez ajouter des matchs ?\n Apuuyez sur le bouton pour accéder au menu match',
+    if (!isPush) {
+      isPush = true;
+      loadDisplay();
+      await Future.delayed(Duration(milliseconds: 1000));
+      clearColorButtonBottomAppBar();
+      colorButtonMenu = Colors.white;
+      screenDisplay = Column(
+        children: <Widget>[
+          ContainerIYP(
+            text: const Text(
+              'Bienvenue sur Improve Your Ball ! 🏀',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
-            ElevatedButton(
-              onPressed: null,
-              child: Text('MATCH'),
-            )
-          ],
-          couleur: noir,
-        ),
-        //Section classement
-        ContainerButtonIYP(
-          children: [
-            Text(
-              'Vous souhaitez voir le classement \n et vous comparez avec les utilisateurs ? \n Appusez le bouton pour accéder au classement',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
-            ElevatedButton(
-              onPressed: null,
-              child: Text('CLASSEMENT'),
-            ),
-          ],
-          couleur: rouge,
-        ),
-        //Section programme
-        const ContainerButtonIYP(
-          children: [
-            Text(
-              'Vous souhaitez ajouter des matchs ?\n Apuuyez sur le bouton pour accéder au menu match',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
-            ElevatedButton(
-              onPressed: null,
-              child: Text('MATCH'),
-            )
-          ],
-          couleur: Colors.orange,
-        ),
-      ],
-    );
+            couleur: rouge,
+          ),
+          //Section match
+          ContainerButtonIYP(
+            couleur: noir,
+            children: [
+              const Text(
+                'Vous souhaitez ajouter ou voir vos matchs ?',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+              ElevatedButton(
+                onPressed: goToRencontre,
+                child: const Text('Appuyez ici'),
+              )
+            ],
+          ),
+          //Section classement
+          ContainerButtonIYP(
+            children: [
+              Text(
+                'Vous souhaitez voir le classement \n et vous comparez avec les utilisateurs ? \n Appusez le bouton pour accéder au classement',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+              ElevatedButton(
+                onPressed: null,
+                child: Text('CLASSEMENT'),
+              ),
+            ],
+            couleur: rouge,
+          ),
+          //Section programme
+          const ContainerButtonIYP(
+            children: [
+              Text(
+                'Vous souhaitez ajouter des matchs ?\n Apuuyez sur le bouton pour accéder au menu match',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+              ElevatedButton(
+                onPressed: null,
+                child: Text('MATCH'),
+              )
+            ],
+            couleur: Colors.orange,
+          ),
+        ],
+      );
+    }
+    isPush = false;
     setState(() {});
   }
 }

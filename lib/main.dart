@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_improve_your_ball/login.dart';
+import 'package:flutter_improve_your_ball/match.dart';
 import 'package:flutter_improve_your_ball/menu.dart';
+
+import 'model/rencontre.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,8 +11,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/menu': (context) => const Menu(),
         '/login': (context) => const Login(),
+        '/match': (context) => const RencontreScreen()
       },
     );
   }
