@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_improve_your_ball/model/constant.dart';
 import 'package:flutter_improve_your_ball/model/local.dart';
+import 'package:flutter_improve_your_ball/model/rencontre.dart';
 import 'package:flutter_improve_your_ball/model/user.dart';
 import 'package:http/http.dart' as http;
 
@@ -65,6 +66,30 @@ class API {
       }
     }
     return usersTrie.first;
+  }
+
+  static Future<void> sendRencontre(Rencontre rencontre) async {
+    var user = await getUserWithUsername(Local.LocalUsername);
+    print('id = ${user.id}');
+    final response = await http.post(
+      Uri.parse(Constant.Url + Constant.UrlPostRencontre),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${Local.localToken}',
+      },
+      body: jsonEncode({
+        'nombreDeuxPoints': rencontre.nombreDeuxPoint,
+        'nombreTroisPoints': rencontre.nombreTroisPoints,
+        'nombreRebonds': rencontre.nombreRebonds,
+        'minuteJouer': rencontre.minuteJouer,
+        'gagner': rencontre.gagner,
+        'nombreDeFautes': rencontre.nombreDeFautes,
+        'user': '/api/users/${user.id}'
+      }),
+    );
+
+    print(response.statusCode);
   }
 
   static String GetMessage() {
