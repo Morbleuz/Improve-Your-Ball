@@ -13,11 +13,7 @@ class AppBarIYP extends StatelessWidget with PreferredSizeWidget {
             'assets/images/logo.png',
             width: 100,
             height: 100,
-            color: Colors.white,
-          ),
-          const Padding(
-            padding: EdgeInsets.all(2),
-            child: Text("Improve Your Ball"),
+            color: Colors.black,
           ),
         ]),
       ),

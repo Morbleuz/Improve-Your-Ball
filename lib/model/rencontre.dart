@@ -25,6 +25,10 @@ class Rencontre {
         json["nombreDeFautes"]);
   }
 
+  int calculNombresPoints() {
+    return nombreDeuxPoint + nombreTroisPoints;
+  }
+
   @override
   String toString() {
     return "id : $id, nbDeuxPoints : $nombreDeuxPoint, nbTroisPoints : $nombreTroisPoints, nbRebonds : $nombreRebonds, minuteJouer : $minuteJouer, gagner : $gagner, nombreDeFautes : $nombreDeFautes";

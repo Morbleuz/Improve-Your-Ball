@@ -35,6 +35,7 @@ class _Menu extends State<Menu> {
     menuDisplay();
   }
 
+  ///Fonction pour remettre tout les boutons à la couleur noir.
   void clearColorButtonBottomAppBar() {
     colorButtonMenu = Colors.black;
     colorButtonTest = Colors.black;
@@ -88,9 +89,10 @@ class _Menu extends State<Menu> {
   Future<void> profileDisplay() async {
     if (!isPush) {
       isPush = true;
+      clearColorButtonBottomAppBar();
+      colorButttonProfile = Colors.white;
       loadDisplay();
       User user = await API.getUserWithUsername(Local.LocalUsername);
-      clearColorButtonBottomAppBar();
       screenDisplay = Column(
         children: [
           ContainerIYP(
@@ -133,10 +135,10 @@ class _Menu extends State<Menu> {
   Future<void> menuDisplay() async {
     if (!isPush) {
       isPush = true;
-      loadDisplay();
-      await Future.delayed(Duration(milliseconds: 1000));
       clearColorButtonBottomAppBar();
       colorButtonMenu = Colors.white;
+      loadDisplay();
+      await Future.delayed(Duration(milliseconds: 1000));
       screenDisplay = Column(
         children: <Widget>[
           ContainerIYP(

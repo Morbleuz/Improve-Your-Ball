@@ -9,6 +9,8 @@ import 'package:flutter_improve_your_ball/model/user.dart';
 import 'package:flutter_improve_your_ball/modelView/appbarIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/containerIYP.dart';
 
+import 'modelView/containerRencontre.dart';
+
 class RencontreScreen extends StatefulWidget {
   const RencontreScreen({super.key});
 
@@ -58,7 +60,9 @@ class _RencontreScreen extends State<RencontreScreen> {
     listRencontres = [];
     User user = await API.getUserWithUsername(Local.LocalUsername);
     for (Rencontre r in user.rencontres) {
-      listRencontres.add(Text("Rencontre : ${r.id}"));
+      listRencontres.add(ContainerRencontre(
+        rencontre: r,
+      ));
     }
     setState(() {});
   }
