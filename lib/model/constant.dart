@@ -4,4 +4,14 @@ abstract class Constant {
   static String urlToken = "/api/authentication_token";
   static String urlGetAllUser = "/api/users?page=1";
   static String urlPostRencontre = "/api/rencontres";
+
+  ///Regex qui respecte la règle suivant
+  ///Le champs doit avoir :
+  ///une minuscule
+  ///une majuscule
+  ///un nombre numérique
+  ///un caractère spécial (!@#$%...)
+  ///avoir une longueur de 8 au minimun
+  static RegExp regexStrongPassword =
+      RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 }

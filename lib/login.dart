@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_improve_your_ball/model/constant.dart';
 import 'package:flutter_improve_your_ball/model/local.dart';
 import 'package:flutter_improve_your_ball/modelView/ContainerButtonIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/appbarIYP.dart';
@@ -16,6 +17,34 @@ class Login extends StatefulWidget {
 class _Login extends State<Login> {
   late TextEditingController _controllerUsername;
   late TextEditingController _controllerPassword;
+
+  ///Permet de savoir si l'utilisateur est rentré dans le champs Username
+  bool clickOnUsername = false;
+  bool clickOnPassword = false;
+
+  ///Les vérifications du Username
+  String? get _errorUsername {
+    final text = _controllerUsername.value.text;
+    if (text.isEmpty && clickOnUsername) {
+      return 'Ce champ ne doit pas être vide';
+    }
+    // return null if the text is valid
+    return null;
+  }
+
+  ///Les vérifications du password
+  String? get _errorPassord {
+    final text = _controllerPassword.value.text;
+    if (text.isEmpty && clickOnPassword) {
+      return 'Ce champ ne doit pas être vide';
+    }
+    if (clickOnPassword && !Constant.regexStrongPassword.hasMatch(text)) {
+      return 'Mot de passe non valide';
+    }
+    // return null if the text is valid
+    return null;
+  }
+
   String errorMsg = "";
   @override
   void initState() {
@@ -39,16 +68,20 @@ class _Login extends State<Login> {
 
   ///Permet de se connecter à l'API
   void connect() async {
-    //On stocker les variables localement
-    Local.LocalUsername = _controllerUsername.text;
-    Local.LocalPassword = _controllerPassword.text;
-    await API.recupToken(_controllerUsername.text, _controllerPassword.text);
-    if (Local.localToken.isNotEmpty) {
-      errorMsg = "";
-      goToMenu();
-    } else {
-      errorMsg = API.GetMessage();
+    //Vérification du formulaire
+    if (_errorUsername == null && _errorPassord == null) {
+      //On stocker les variables localement
+      Local.LocalUsername = _controllerUsername.text;
+      Local.LocalPassword = _controllerPassword.text;
+      await API.recupToken(_controllerUsername.text, _controllerPassword.text);
+      if (Local.localToken.isNotEmpty) {
+        errorMsg = "";
+        goToMenu();
+      } else {
+        errorMsg = API.GetMessage();
+      }
     }
+
     setState(() {});
   }
 
@@ -77,18 +110,26 @@ class _Login extends State<Login> {
             ),
             TextField(
               controller: _controllerUsername,
-              decoration: const InputDecoration(
-                hintText: 'Username',
-                icon: Icon(Icons.person),
+              decoration: InputDecoration(
+                labelText: 'Username',
+                errorText: _errorUsername,
+                icon: const Icon(Icons.person),
               ),
+              onChanged: (text) => setState(() {
+                clickOnUsername = true;
+              }),
             ),
             TextField(
               obscureText: true,
               controller: _controllerPassword,
-              decoration: const InputDecoration(
-                hintText: 'Mot de passe',
-                icon: Icon(Icons.lock),
+              decoration: InputDecoration(
+                labelText: 'Mot de passe',
+                errorText: _errorPassord,
+                icon: const Icon(Icons.lock),
               ),
+              onChanged: (text) => setState(() {
+                clickOnPassword = true;
+              }),
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 5, 0, 2),
