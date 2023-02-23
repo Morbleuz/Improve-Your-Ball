@@ -13,7 +13,7 @@ class API {
     String token = "";
     try {
       final reponse = await http.post(
-        Uri.parse(Constant.Url + Constant.UrlToken),
+        Uri.parse(Constant.url + Constant.urlToken),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -39,7 +39,7 @@ class API {
   static Future<List<User>> getAllUser() async {
     List<User> users = [];
     final response = await http
-        .get(Uri.parse(Constant.Url + Constant.UrlGetAllUser), headers: {
+        .get(Uri.parse(Constant.url + Constant.urlGetAllUser), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer ${Local.localToken}',
@@ -49,9 +49,6 @@ class API {
       for (var u in userList) {
         users.add(User.fromJson(u));
       }
-    }
-    for (var element in users) {
-      print(element.toString());
     }
     return users;
   }
@@ -70,9 +67,8 @@ class API {
 
   static Future<void> sendRencontre(Rencontre rencontre) async {
     var user = await getUserWithUsername(Local.LocalUsername);
-    print('id = ${user.id}');
     final response = await http.post(
-      Uri.parse(Constant.Url + Constant.UrlPostRencontre),
+      Uri.parse(Constant.url + Constant.urlPostRencontre),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -88,8 +84,6 @@ class API {
         'user': '/api/users/${user.id}'
       }),
     );
-
-    print(response.statusCode);
   }
 
   static String GetMessage() {

@@ -1,10 +1,13 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_improve_your_ball/model/local.dart';
 import 'package:flutter_improve_your_ball/modelView/ContainerButtonIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/appbarIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/containerIYP.dart';
 import 'package:graphic/graphic.dart';
+import 'data/recontre_data.dart';
 import 'model/api.dart';
+import 'model/couleur.dart';
 import 'model/local.dart';
 import 'model/user.dart';
 
@@ -18,8 +21,6 @@ class Menu extends StatefulWidget {
 class _Menu extends State<Menu> {
   ///Permet de savoir si l'utilisateur à appuyer sur un bouton de la appBar
   bool isPush = false;
-  final Color rouge = const Color.fromRGBO(167, 0, 30, 1);
-  final Color noir = const Color.fromRGBO(30, 15, 28, 1);
   late Column screenDisplay;
   late Color colorButtonMenu;
   late Color colorButtonTest;
@@ -85,6 +86,17 @@ class _Menu extends State<Menu> {
     setState(() {});
   }
 
+  ///Déconnecte l'utilisateur
+  void deconnexion() {
+    //On vide les variables local
+    Local.LocalUsername = "";
+    Local.LocalPassword = "";
+    Local.localToken = "";
+    //On renvoie sur l'écran de connexion
+    Navigator.of(context).popAndPushNamed("/login");
+    setState(() {});
+  }
+
   ///Pour afficher le profil de l'utilisateur
   Future<void> profileDisplay() async {
     if (!isPush) {
@@ -99,10 +111,34 @@ class _Menu extends State<Menu> {
             text: Text(
               'Hello, ${user.username} !',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, color: Colors.white),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
-            couleur: rouge,
+            couleur: Couleur.rouge,
           ),
+          TextButton(
+            onPressed: deconnexion,
+            child: const Text("Déconnexion"),
+          ),
+          ContainerButtonIYP(couleur: Couleur.rouge, children: [
+            Text(
+              "Vous avez ${user.rencontres.length} rencontres !",
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 20, color: Colors.white),
+            ),
+            SizedBox(
+              width: 1000,
+              height: 100,
+              child: PieChart(
+                PieChartData(
+                  sections: RencontreData.getSection(user.rencontres),
+                  sectionsSpace: 2.0,
+                  centerSpaceRadius: 10,
+                ),
+                swapAnimationDuration: Duration(milliseconds: 150), // Optional
+                swapAnimationCurve: Curves.linear,
+              ),
+            ),
+          ]),
         ],
       );
     }
@@ -147,11 +183,11 @@ class _Menu extends State<Menu> {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
-            couleur: rouge,
+            couleur: Couleur.rouge,
           ),
           //Section match
           ContainerButtonIYP(
-            couleur: noir,
+            couleur: Couleur.noir,
             children: [
               const Text(
                 'Vous souhaitez ajouter ou voir vos matchs ?',
@@ -166,7 +202,8 @@ class _Menu extends State<Menu> {
           ),
           //Section classement
           ContainerButtonIYP(
-            children: [
+            couleur: Couleur.rouge,
+            children: const [
               Text(
                 'Vous souhaitez voir le classement \n et vous comparez avec les utilisateurs ? \n Appusez le bouton pour accéder au classement',
                 textAlign: TextAlign.center,
@@ -177,10 +214,10 @@ class _Menu extends State<Menu> {
                 child: Text('CLASSEMENT'),
               ),
             ],
-            couleur: rouge,
           ),
           //Section programme
           const ContainerButtonIYP(
+            couleur: Colors.orange,
             children: [
               Text(
                 'Vous souhaitez ajouter des matchs ?\n Apuuyez sur le bouton pour accéder au menu match',
@@ -192,7 +229,6 @@ class _Menu extends State<Menu> {
                 child: Text('MATCH'),
               )
             ],
-            couleur: Colors.orange,
           ),
         ],
       );

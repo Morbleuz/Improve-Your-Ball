@@ -14,7 +14,6 @@ class Rencontre {
   ///TODO
 
   static Rencontre fromJson(Map<String, dynamic> json) {
-    print(json);
     return Rencontre(
         json["id"],
         json["nombreDeuxPoints"],

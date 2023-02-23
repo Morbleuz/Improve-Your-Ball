@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_improve_your_ball/extension.dart';
+import 'package:flutter_improve_your_ball/model/extension.dart';
 import 'package:flutter_improve_your_ball/model/api.dart';
 import 'package:flutter_improve_your_ball/model/local.dart';
 import 'package:flutter_improve_your_ball/model/rencontre.dart';

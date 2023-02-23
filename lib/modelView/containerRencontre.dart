@@ -4,21 +4,20 @@ import 'package:flutter_improve_your_ball/model/rencontre.dart';
 class ContainerRencontre extends StatelessWidget {
   final Rencontre rencontre;
 
-  ContainerRencontre({
+  const ContainerRencontre({
     super.key,
     required this.rencontre,
   });
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Container(
         width: MediaQuery.of(context).size.width - 20,
         decoration: BoxDecoration(
           color: rencontre.gagner ? Colors.green : Colors.red,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         child: Padding(
           padding: const EdgeInsets.all(5),
