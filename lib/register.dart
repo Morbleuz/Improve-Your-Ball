@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_improve_your_ball/menu.dart';
+import 'package:flutter_improve_your_ball/main.dart';
+
 import 'package:flutter_improve_your_ball/model/local.dart';
 import 'package:flutter_improve_your_ball/modelView/ContainerButtonIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/appbarIYP.dart';
@@ -6,50 +9,52 @@ import 'package:flutter_improve_your_ball/modelView/containerIYP.dart';
 
 import 'model/api.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<StatefulWidget> createState() => _Login();
+  State<StatefulWidget> createState() => _Register();
 }
 
-class _Login extends State<Login> {
+class _Register extends State<Register> {
   late TextEditingController _controllerUsername;
   late TextEditingController _controllerPassword;
+  late TextEditingController _controllerPassword2;
+
   String errorMsg = "";
   @override
   void initState() {
     super.initState();
     _controllerUsername = TextEditingController();
     _controllerPassword = TextEditingController();
+    _controllerPassword2 = TextEditingController();
   }
 
-  ///Permet de naviguer jusqu'au menu
+  bool valide() {
+    if (_controllerUsername.text.isEmpty) {
+      errorMsg = 'Le nom d\'utilisateur est vide';
+      return true;
+    }
+    if (_controllerPassword.text.isEmpty) {
+      errorMsg = 'Le mot de passe est vide';
+    }
+    return false;
+  }
+
+//bouton inscription
   void goToMenu() {
     setState(() {
-      Navigator.popAndPushNamed(context, "/menu");
+      if (valide() == false) {
+        Navigator.popAndPushNamed(context, '/menu');
+      }
     });
   }
 
-  void goToRegister() {
+//bouton retour
+  void goToLogin() {
     setState(() {
-      Navigator.popAndPushNamed(context, "/register");
+      Navigator.popAndPushNamed(context, '/login');
     });
-  }
-
-  ///Permet de se connecter à l'API
-  void connect() async {
-    //On stocker les variables localement
-    Local.LocalUsername = _controllerUsername.text;
-    Local.LocalPassword = _controllerPassword.text;
-    await API.recupToken(_controllerUsername.text, _controllerPassword.text);
-    if (Local.localToken.isNotEmpty) {
-      errorMsg = "";
-      goToMenu();
-    } else {
-      errorMsg = API.GetMessage();
-    }
-    setState(() {});
   }
 
   @override
@@ -73,12 +78,12 @@ class _Login extends State<Login> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const Text(
-              'Connectez-vous pour continuer',
+              'Veuillez vous créer un compte pour continuer',
             ),
             TextField(
               controller: _controllerUsername,
               decoration: const InputDecoration(
-                hintText: 'Username',
+                hintText: 'Nom d\'utilisateur',
                 icon: Icon(Icons.person),
               ),
             ),
@@ -90,11 +95,19 @@ class _Login extends State<Login> {
                 icon: Icon(Icons.lock),
               ),
             ),
+            TextField(
+              obscureText: true,
+              controller: _controllerPassword2,
+              decoration: const InputDecoration(
+                hintText: 'Confirmation du mot de passe',
+                icon: Icon(Icons.lock),
+              ),
+            ),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 5, 0, 2),
               child: Text(
                 errorMsg,
-                style: const TextStyle(color: Color(0xFFF44336)),
+                style: const TextStyle(color: Colors.red),
               ),
             ),
             const Padding(
@@ -102,14 +115,14 @@ class _Login extends State<Login> {
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               TextButton(
-                onPressed: goToRegister,
-                child: const Text("Créer un compte"),
+                onPressed: goToLogin,
+                child: const Text("Retour"),
               ),
               ElevatedButton(
-                onPressed: connect,
-                child: const Text('Connexion'),
+                onPressed: goToMenu,
+                child: const Text('Inscription'),
               )
-            ])
+            ]),
           ])
         ],
       )),

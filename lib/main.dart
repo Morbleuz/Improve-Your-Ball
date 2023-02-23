@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_improve_your_ball/login.dart';
+import 'package:flutter_improve_your_ball/register.dart';
 import 'package:flutter_improve_your_ball/rencontre.dart';
 import 'package:flutter_improve_your_ball/menu.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/menu': (context) => const Menu(),
         '/login': (context) => const Login(),
+        '/register': (context) => const Register(),
         '/match': (context) => const RencontreScreen()
       },
     );

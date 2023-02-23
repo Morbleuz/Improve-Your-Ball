@@ -1,6 +1,6 @@
 import 'dart:ui';
 
 abstract class Couleur {
-  static Color rouge = const Color.fromRGBO(167, 0, 30, 1);
-  static Color noir = const Color.fromRGBO(30, 15, 28, 1);
+  static Color rouge = Color.fromARGB(255, 110, 110, 110);
+  static Color noir = Color.fromARGB(255, 43, 43, 43);
 }

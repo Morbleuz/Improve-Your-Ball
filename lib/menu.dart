@@ -47,7 +47,7 @@ class _Menu extends State<Menu> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-          height: MediaQuery.of(context).size.height / 12,
+          // height: MediaQuery.of(context).size.height / 12,
           color: Colors.orange,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -216,9 +216,9 @@ class _Menu extends State<Menu> {
             ],
           ),
           //Section programme
-          const ContainerButtonIYP(
-            couleur: Colors.orange,
-            children: [
+          ContainerButtonIYP(
+            couleur: Couleur.noir,
+            children: const [
               Text(
                 'Vous souhaitez ajouter des matchs ?\n Apuuyez sur le bouton pour accéder au menu match',
                 textAlign: TextAlign.center,
