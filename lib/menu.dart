@@ -60,7 +60,7 @@ class _Menu extends State<Menu> {
               ),
               IconButton(
                 onPressed: testDisplay,
-                icon: const Icon(Icons.troubleshoot_sharp),
+                icon: const Icon(Icons.border_vertical_outlined),
                 color: colorButtonTest,
               ),
               IconButton(
@@ -125,6 +125,7 @@ class _Menu extends State<Menu> {
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
+            // le graphique
             SizedBox(
               width: 1000,
               height: 100,
@@ -134,7 +135,8 @@ class _Menu extends State<Menu> {
                   sectionsSpace: 2.0,
                   centerSpaceRadius: 10,
                 ),
-                swapAnimationDuration: Duration(milliseconds: 150), // Optional
+                swapAnimationDuration:
+                    const Duration(milliseconds: 150), // Optional
                 swapAnimationCurve: Curves.linear,
               ),
             ),

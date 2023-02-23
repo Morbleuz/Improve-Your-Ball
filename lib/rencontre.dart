@@ -126,7 +126,7 @@ class _RencontreScreen extends State<RencontreScreen> {
                     ),
                     TextFormField(
                       decoration:
-                          const InputDecoration(hintText: 'Nombre de rebonts '),
+                          const InputDecoration(hintText: 'Nombre de rebonds '),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Champs vide';
