@@ -32,7 +32,7 @@ class _Login extends State<Login> {
     return null;
   }
 
-  ///Les vérifications du password
+  ///Les vérifications du Password
   String? get _errorPassord {
     final text = _controllerPassword.value.text;
     if (text.isEmpty && clickOnPassword) {

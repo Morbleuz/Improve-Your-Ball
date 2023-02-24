@@ -109,7 +109,7 @@ class _Menu extends State<Menu> {
         children: [
           ContainerIYP(
             text: Text(
-              'Hello, ${user.username} !',
+              'Hello, ${user.nom.toUpperCase()} ${user.prenom.toLowerCase()} !',
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
