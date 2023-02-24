@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_improve_your_ball/classement.dart';
 import 'package:flutter_improve_your_ball/login.dart';
 import 'package:flutter_improve_your_ball/rencontre.dart';
 import 'package:flutter_improve_your_ball/menu.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/menu': (context) => const Menu(),
         '/login': (context) => const Login(),
-        '/match': (context) => const RencontreScreen()
+        '/match': (context) => const RencontreScreen(),
+        '/classementTroisPoints': (context) => const ClassementTroisPoints()
       },
     );
   }

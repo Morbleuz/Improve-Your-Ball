@@ -4,11 +4,9 @@ import 'package:flutter_improve_your_ball/model/local.dart';
 import 'package:flutter_improve_your_ball/modelView/ContainerButtonIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/appbarIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/containerIYP.dart';
-import 'package:graphic/graphic.dart';
 import 'data/recontre_data.dart';
 import 'model/api.dart';
 import 'model/couleur.dart';
-import 'model/local.dart';
 import 'model/user.dart';
 
 class Menu extends StatefulWidget {
@@ -23,7 +21,7 @@ class _Menu extends State<Menu> {
   bool isPush = false;
   late Column screenDisplay;
   late Color colorButtonMenu;
-  late Color colorButtonTest;
+  late Color colorButtonClassement;
   late Color colorButttonProfile;
   double sumTimePlay = 0;
   double sumThreePoints = 2;
@@ -39,9 +37,11 @@ class _Menu extends State<Menu> {
   ///Fonction pour remettre tout les boutons à la couleur noir.
   void clearColorButtonBottomAppBar() {
     colorButtonMenu = Colors.black;
-    colorButtonTest = Colors.black;
+    colorButtonClassement = Colors.black;
     colorButttonProfile = Colors.black;
   }
+
+  void goToClassement() {}
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +59,9 @@ class _Menu extends State<Menu> {
                 color: colorButtonMenu,
               ),
               IconButton(
-                onPressed: testDisplay,
-                icon: const Icon(Icons.border_vertical_outlined),
-                color: colorButtonTest,
+                onPressed: classementDisplay,
+                icon: const Icon(Icons.groups_2),
+                color: colorButtonClassement,
               ),
               IconButton(
                 onPressed: profileDisplay,
@@ -70,19 +70,37 @@ class _Menu extends State<Menu> {
               )
             ],
           )),
-      appBar: AppBarIYP(),
+      appBar: const AppBarIYP(),
       body: SingleChildScrollView(
         child: Center(child: screenDisplay),
       ),
     );
   }
 
-  void testDisplay() {
-    clearColorButtonBottomAppBar();
-    colorButtonTest = Colors.white;
-    screenDisplay = Column(
-      children: [Text('test')],
-    );
+  void classementDisplay() {
+    if (!isPush) {
+      isPush = true;
+      clearColorButtonBottomAppBar();
+      colorButtonClassement = Colors.white;
+      screenDisplay = Column(
+        children: [
+          ContainerButtonIYP(
+            couleur: Couleur.rouge,
+            children: [
+              const Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Text("Voir le classement des 3 points")),
+              ElevatedButton(
+                onPressed: goToClassementTroisPoints,
+                child: const Text("Voir classement"),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
+    isPush = false;
+
     setState(() {});
   }
 
@@ -152,6 +170,13 @@ class _Menu extends State<Menu> {
   void goToRencontre() {
     setState(() {
       Navigator.pushNamed(context, '/match');
+    });
+  }
+
+  ///Fonction pour accèder à l'écran classement 3 points
+  void goToClassementTroisPoints() {
+    setState(() {
+      Navigator.pushNamed(context, '/classementTroisPoints');
     });
   }
 

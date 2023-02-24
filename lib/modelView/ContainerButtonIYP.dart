@@ -6,8 +6,8 @@ class ContainerButtonIYP extends StatelessWidget {
 
   const ContainerButtonIYP({
     super.key,
-    required this.children,
     required this.couleur,
+    required this.children,
   });
 
   @override
