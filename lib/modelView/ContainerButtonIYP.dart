@@ -19,12 +19,12 @@ class ContainerButtonIYP extends StatelessWidget {
         width: MediaQuery.of(context).size.width - 20,
         decoration: BoxDecoration(
           color: couleur,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: children,

@@ -6,11 +6,10 @@ import 'package:flutter_improve_your_ball/model/user.dart';
 import 'package:http/http.dart' as http;
 
 class API {
-  static int? ResponseCode;
+  static int? responseCode;
 
   ///Récupération du token sur l'API en fonction du Username et du Password
   static Future<void> recupToken(String username, String password) async {
-    String token = "";
     try {
       final reponse = await http.post(
         Uri.parse(Constant.url + Constant.urlToken),
@@ -21,7 +20,7 @@ class API {
           <String, String>{'username': username, 'password': password},
         ),
       );
-      ResponseCode = reponse.statusCode;
+      responseCode = reponse.statusCode;
       if (reponse.statusCode == 200) {
         Local.localToken = jsonDecode(reponse.body)['token'];
       }
@@ -86,19 +85,18 @@ class API {
     );
   }
 
-  static String GetMessage() {
-    if (ResponseCode == 200) {
-      return "Succès";
+  static String getMessage() {
+    switch (responseCode) {
+      case 200:
+        return "Succès";
+      case 401:
+        return "Non autorisé";
+      case 403:
+        return "Base Request";
+      case 404:
+        return "Not Found";
+      default:
+        return "Code non connu : $responseCode";
     }
-    if (ResponseCode == 401) {
-      return "Non autorisé";
-    }
-    if (ResponseCode == 403) {
-      return "Bad Request";
-    }
-    if (ResponseCode == 404) {
-      return "Not Found";
-    }
-    return "Code non connu : $ResponseCode";
   }
 }

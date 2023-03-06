@@ -38,9 +38,7 @@ class _Login extends State<Login> {
     if (text.isEmpty && clickOnPassword) {
       return 'Ce champ ne doit pas être vide';
     }
-    if (clickOnPassword && !Constant.regexStrongPassword.hasMatch(text)) {
-      return 'Mot de passe non valide';
-    }
+
     // return null if the text is valid
     return null;
   }
@@ -72,7 +70,7 @@ class _Login extends State<Login> {
         errorMsg = "";
         goToMenu();
       } else {
-        errorMsg = API.GetMessage();
+        errorMsg = API.getMessage();
       }
     }
 
@@ -107,7 +105,10 @@ class _Login extends State<Login> {
               decoration: InputDecoration(
                 labelText: 'Username',
                 errorText: _errorUsername,
-                icon: const Icon(Icons.person),
+                icon: const Icon(
+                  Icons.person,
+                ),
+                suffixStyle: const TextStyle(color: Colors.green),
               ),
               onChanged: (text) => setState(() {
                 clickOnUsername = true;
@@ -126,7 +127,7 @@ class _Login extends State<Login> {
               }),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 2),
+              padding: const EdgeInsets.fromLTRB(0, 5, 0, 2),
               child: Text(
                 errorMsg,
                 style: const TextStyle(color: Colors.red),

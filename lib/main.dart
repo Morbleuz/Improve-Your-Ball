@@ -4,8 +4,6 @@ import 'package:flutter_improve_your_ball/login.dart';
 import 'package:flutter_improve_your_ball/rencontre.dart';
 import 'package:flutter_improve_your_ball/menu.dart';
 
-import 'model/rencontre.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -23,7 +21,9 @@ class MyApp extends StatelessWidget {
         '/menu': (context) => const Menu(),
         '/login': (context) => const Login(),
         '/match': (context) => const RencontreScreen(),
-        '/classementTroisPoints': (context) => const ClassementTroisPoints()
+        '/classementTroisPoints': (context) => const ClassementTroisPoint(),
+        '/classementDeuxPoints': (context) => const ClassementDeuxPoint(),
+        '/classementVictoire': (context) => const ClassementVictoire(),
       },
     );
   }

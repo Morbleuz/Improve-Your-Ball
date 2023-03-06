@@ -3,11 +3,11 @@ import 'package:flutter_improve_your_ball/model/extension.dart';
 
 import '../model/user.dart';
 
-class ContainerUser extends StatelessWidget {
+class ContainerDeuxPoint extends StatelessWidget {
   final int place;
   final User user;
 
-  const ContainerUser({
+  const ContainerDeuxPoint({
     super.key,
     required this.place,
     required this.user,
@@ -17,11 +17,13 @@ class ContainerUser extends StatelessWidget {
   Widget build(BuildContext context) {
     var couleur;
     if (place == 1) {
-      couleur = Colors.green;
+      couleur = Colors.yellow;
     } else if (place == 2) {
       couleur = Colors.grey;
+    } else if (place == 3) {
+      couleur = Colors.brown;
     } else {
-      couleur = Colors.red;
+      couleur = Colors.blue;
     }
     // TODO: implement build
     return Padding(
@@ -41,7 +43,7 @@ class ContainerUser extends StatelessWidget {
                 children: [
                   Text('#$place'),
                   Text(user.username.toUpperCase()),
-                  Text('moyenne : ${user.rencontres.getSumTroisPoints()}')
+                  Text('moyenne : ${user.rencontres.getSumDeuxPoints()}')
                 ]),
           ),
         ),

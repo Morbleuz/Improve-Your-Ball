@@ -18,25 +18,100 @@ extension StringExtension on String? {
 
 extension ListRencontre on List<Rencontre> {
   int getSumTroisPoints() {
+    if (isEmpty) {
+      return 0;
+    }
     int sum = 0;
     for (Rencontre r in this) {
       sum += r.nombreTroisPoints;
     }
-    return (sum / this.length).toInt();
+    return (sum / length).toInt();
+  }
+
+  int getSumDeuxPoints() {
+    if (isEmpty) {
+      return 0;
+    }
+    int sum = 0;
+    for (Rencontre r in this) {
+      sum += r.nombreDeuxPoint;
+    }
+    return (sum / length).toInt();
+  }
+
+  int getSumVictoire() {
+    if (isEmpty) {
+      return 0;
+    }
+    int sum = 0;
+    for (Rencontre r in this) {
+      r.gagner ? sum++ : null;
+    }
+    return sum;
   }
 }
 
 extension ListUser on List<User> {
-  void classementTroisPoints() {
-    List<User> copie = this;
+  List<User> orderByTroisPoint() {
     List<User> usersTrie = [];
-    User userMax = this[0];
-
-    for (int x = 0; x < this.length; x++) {
-      if (userMax.rencontres.getSumTroisPoints() <
-          this[x].rencontres.getSumTroisPoints()) {
-        userMax = this[x];
+    int initLongueur = length;
+    while (usersTrie.length < initLongueur) {
+      //On récupérère le 0
+      User userMax = this[0];
+      //On cherche le min
+      for (int x = 0; x < length; x++) {
+        if (this[x].rencontres.getSumTroisPoints() >
+            userMax.rencontres.getSumTroisPoints()) {
+          userMax = this[x];
+        }
       }
+      //On le supprime
+      remove(userMax);
+      //On l'ajoute à liste trie
+      usersTrie.add(userMax);
     }
+    return usersTrie;
+  }
+
+  List<User> orderByDeuxPoint() {
+    List<User> usersTrie = [];
+    int initLongueur = length;
+    while (usersTrie.length < initLongueur) {
+      //On récupérère le 0
+      User userMax = this[0];
+      //On cherche le min
+      for (int x = 0; x < length; x++) {
+        if (this[x].rencontres.getSumDeuxPoints() >
+            userMax.rencontres.getSumDeuxPoints()) {
+          userMax = this[x];
+        }
+      }
+      //On le supprime
+      remove(userMax);
+      //On l'ajoute à liste trie
+      usersTrie.add(userMax);
+    }
+    return usersTrie;
+  }
+
+  List<User> orderByVictoire() {
+    List<User> usersTrie = [];
+    int initLongueur = length;
+    while (usersTrie.length < initLongueur) {
+      //On récupérère le 0
+      User userMax = this[0];
+      //On cherche le min
+      for (int x = 0; x < length; x++) {
+        if (this[x].rencontres.getSumVictoire() >
+            userMax.rencontres.getSumVictoire()) {
+          userMax = this[x];
+        }
+      }
+      //On le supprime
+      remove(userMax);
+      //On l'ajoute à liste trie
+      usersTrie.add(userMax);
+    }
+    return usersTrie;
   }
 }

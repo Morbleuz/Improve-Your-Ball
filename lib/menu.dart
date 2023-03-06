@@ -41,8 +41,6 @@ class _Menu extends State<Menu> {
     colorButttonProfile = Colors.black;
   }
 
-  void goToClassement() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,6 +90,30 @@ class _Menu extends State<Menu> {
                   child: Text("Voir le classement des 3 points")),
               ElevatedButton(
                 onPressed: goToClassementTroisPoints,
+                child: const Text("Voir classement"),
+              ),
+            ],
+          ),
+          ContainerButtonIYP(
+            couleur: Couleur.rouge,
+            children: [
+              const Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Text("Voir le classement des 2 points")),
+              ElevatedButton(
+                onPressed: goToClassementDeuxPoints,
+                child: const Text("Voir classement"),
+              ),
+            ],
+          ),
+          ContainerButtonIYP(
+            couleur: Couleur.rouge,
+            children: [
+              const Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Text("Voir le classement des victoires")),
+              ElevatedButton(
+                onPressed: goToClassementVictoires,
                 child: const Text("Voir classement"),
               ),
             ],
@@ -180,11 +202,25 @@ class _Menu extends State<Menu> {
     });
   }
 
+  ///Fonction pour accèder à l'écran classement 2 points
+  void goToClassementDeuxPoints() {
+    setState(() {
+      Navigator.pushNamed(context, '/classementDeuxPoints');
+    });
+  }
+
+  ///Fonction pour accèder à l'écran classement en rapport avec les victoires
+  void goToClassementVictoires() {
+    setState(() {
+      Navigator.pushNamed(context, '/classementVictoire');
+    });
+  }
+
   ///Pour afficher l'écran de chargement
   void loadDisplay() {
     screenDisplay = Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+      children: const [
         Padding(padding: EdgeInsets.all(10)),
         CircularProgressIndicator(
           color: Colors.orange,
