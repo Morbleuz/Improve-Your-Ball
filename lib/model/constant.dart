@@ -3,6 +3,8 @@ abstract class Constant {
   static String url = "http://127.0.0.1:8000";
   static String urlToken = "/api/authentication_token";
   static String urlGetAllUser = "/api/users?page=1";
+  static String urlUser = "/api/users";
+
   static String urlPostRencontre = "/api/rencontres";
 
   ///Regex qui respecte la règle suivant

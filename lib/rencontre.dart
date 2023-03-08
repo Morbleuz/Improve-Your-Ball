@@ -79,7 +79,7 @@ class _RencontreScreen extends State<RencontreScreen> {
     if (user.rencontres.isEmpty) {
       listRencontres.add(
         ContainerIYP(
-          couleur: Couleur.rouge,
+          couleur: Couleur.gris,
           text: const Text(
             "Vous n'avez aucune rencontre. \n Ajoutez de nouvelles rencontres en cliquant sur le bouton en bas à droite.",
             textAlign: TextAlign.center,
@@ -90,10 +90,28 @@ class _RencontreScreen extends State<RencontreScreen> {
     }
 
     if (listRencontres.isEmpty) {
+      listRencontres.add(
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.02,
+        ),
+      );
       listRencontres.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          TextButton(onPressed: looseFilter, child: Text("Trie loose")),
-          TextButton(onPressed: winFilter, child: Text("Trie victoire")),
+          ElevatedButton(
+            onPressed: looseFilter,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red),
+            ),
+            child: const Text("Défaites"),
+          ),
+          ElevatedButton(
+            onPressed: winFilter,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.green),
+            ),
+            child: const Text("Victoires"),
+          ),
         ],
       ));
       for (Rencontre r in user.rencontres) {

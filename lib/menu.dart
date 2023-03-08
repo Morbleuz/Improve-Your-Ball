@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_improve_your_ball/model/DTO/userUpdate.dart';
 import 'package:flutter_improve_your_ball/model/local.dart';
 import 'package:flutter_improve_your_ball/modelView/ContainerButtonIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/appbarIYP.dart';
@@ -26,6 +27,8 @@ class _Menu extends State<Menu> {
   double sumTimePlay = 0;
   double sumThreePoints = 2;
   double sumTwoPoints = 9;
+  final _formKey = GlobalKey<FormState>();
+  UserUpdate userToUpdate = UserUpdate();
 
   @override
   void initState() {
@@ -39,6 +42,21 @@ class _Menu extends State<Menu> {
     colorButtonMenu = Colors.black;
     colorButtonClassement = Colors.black;
     colorButttonProfile = Colors.black;
+  }
+
+  void updateUser() async {
+    loadDisplay();
+    User user = await API.getUserWithUsername(Local.LocalUsername);
+    await API.updateUser(user.id, userToUpdate);
+    profileDisplay();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Modification de votre profil effectué ✅',
+        ),
+        duration: Duration(milliseconds: 1000),
+      ),
+    );
   }
 
   @override
@@ -83,7 +101,7 @@ class _Menu extends State<Menu> {
       screenDisplay = Column(
         children: [
           ContainerButtonIYP(
-            couleur: Couleur.rouge,
+            couleur: Couleur.gris,
             children: [
               const Padding(
                   padding: EdgeInsets.all(4),
@@ -95,7 +113,7 @@ class _Menu extends State<Menu> {
             ],
           ),
           ContainerButtonIYP(
-            couleur: Couleur.rouge,
+            couleur: Couleur.gris,
             children: [
               const Padding(
                   padding: EdgeInsets.all(4),
@@ -107,7 +125,7 @@ class _Menu extends State<Menu> {
             ],
           ),
           ContainerButtonIYP(
-            couleur: Couleur.rouge,
+            couleur: Couleur.gris,
             children: [
               const Padding(
                   padding: EdgeInsets.all(4),
@@ -147,19 +165,62 @@ class _Menu extends State<Menu> {
       User user = await API.getUserWithUsername(Local.LocalUsername);
       screenDisplay = Column(
         children: [
+          Text("Mon profil"),
+          Padding(
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+            child: PhysicalModel(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.blue,
+              elevation: 18,
+              shadowColor: Colors.black,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text("${user.nom} ${user.prenom}"),
+                        IconButton(
+                            onPressed: () => modifUser(user),
+                            icon: Icon(Icons.settings))
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            const Text("Rencontres"),
+                            Text("${user.rencontres.length}")
+                          ],
+                        ),
+                        Column(
+                          children: const [Text("Programmes"), Text("0")],
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
           ContainerIYP(
             text: Text(
               'Hello, ${user.nom.toUpperCase()} ${user.prenom.toLowerCase()} !',
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
-            couleur: Couleur.rouge,
+            couleur: Couleur.gris,
           ),
           TextButton(
             onPressed: deconnexion,
             child: const Text("Déconnexion"),
           ),
-          ContainerButtonIYP(couleur: Couleur.rouge, children: [
+          ContainerButtonIYP(couleur: Couleur.gris, children: [
             Text(
               "Vous avez ${user.rencontres.length} rencontres !",
               textAlign: TextAlign.center,
@@ -216,6 +277,64 @@ class _Menu extends State<Menu> {
     });
   }
 
+  ///Modif un User
+  modifUser(User user) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(builder: (stfContext, stfSetState) {
+            return AlertDialog(
+              title: const Text("Ajouter une nouvelle rencontre"),
+              content: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextFormField(
+                      initialValue: user.nom,
+                      decoration: const InputDecoration(hintText: 'Nom'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Champs vide';
+                        }
+                        userToUpdate.nom = value;
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: user.prenom,
+                      decoration: const InputDecoration(hintText: 'Prénom'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Champs vide';
+                        }
+                        userToUpdate.prenom = value;
+                        return null;
+                      },
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            updateUser();
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: const Text('Envoyer'))
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Fermer"))
+              ],
+            );
+          });
+        });
+  }
+
   ///Pour afficher l'écran de chargement
   void loadDisplay() {
     screenDisplay = Column(
@@ -246,7 +365,7 @@ class _Menu extends State<Menu> {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
-            couleur: Couleur.rouge,
+            couleur: Couleur.gris,
           ),
           //Section match
           ContainerButtonIYP(
@@ -265,7 +384,7 @@ class _Menu extends State<Menu> {
           ),
           //Section classement
           ContainerButtonIYP(
-            couleur: Couleur.rouge,
+            couleur: Couleur.gris,
             children: const [
               Text(
                 'Vous souhaitez voir le classement \n et vous comparez avec les utilisateurs ? \n Appusez le bouton pour accéder au classement',

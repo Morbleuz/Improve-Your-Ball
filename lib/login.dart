@@ -138,6 +138,9 @@ class _Login extends State<Login> {
             ),
             ElevatedButton(
               onPressed: connect,
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.orange),
+              ),
               child: const Text('Connexion'),
             )
           ])

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_improve_your_ball/model/DTO/userUpdate.dart';
 import 'package:flutter_improve_your_ball/model/constant.dart';
 import 'package:flutter_improve_your_ball/model/local.dart';
 import 'package:flutter_improve_your_ball/model/rencontre.dart';
@@ -64,6 +65,21 @@ class API {
     return usersTrie.first;
   }
 
+  static Future<void> updateUser(int id, UserUpdate user) async {
+    print(id);
+    final response = await http.patch(
+      Uri.parse(Constant.url + Constant.urlUser + "/" + id.toString()),
+      headers: {
+        'Content-Type': 'application/merge-patch+json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${Local.localToken}',
+      },
+      body: jsonEncode({"prenom": user.prenom, "nom": user.nom}),
+    );
+    responseCode = response.statusCode;
+  }
+
+  ///Envoie une rencontre
   static Future<void> sendRencontre(Rencontre rencontre) async {
     var user = await getUserWithUsername(Local.LocalUsername);
     final response = await http.post(
