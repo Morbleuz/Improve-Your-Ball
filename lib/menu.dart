@@ -29,6 +29,7 @@ class _Menu extends State<Menu> {
   double sumTwoPoints = 9;
   final _formKey = GlobalKey<FormState>();
   UserUpdate userToUpdate = UserUpdate();
+  String titleAppBar = "Menu";
 
   @override
   void initState() {
@@ -86,7 +87,9 @@ class _Menu extends State<Menu> {
               )
             ],
           )),
-      appBar: const AppBarIYP(),
+      appBar: AppBarIYP(
+        child: Text(titleAppBar),
+      ),
       body: SingleChildScrollView(
         child: Center(child: screenDisplay),
       ),
@@ -98,6 +101,7 @@ class _Menu extends State<Menu> {
       isPush = true;
       clearColorButtonBottomAppBar();
       colorButtonClassement = Colors.white;
+      titleAppBar = "Classement";
       screenDisplay = Column(
         children: [
           ContainerButtonIYP(
@@ -161,22 +165,22 @@ class _Menu extends State<Menu> {
       isPush = true;
       clearColorButtonBottomAppBar();
       colorButttonProfile = Colors.white;
+      titleAppBar = "Profile";
       loadDisplay();
       User user = await API.getUserWithUsername(Local.LocalUsername);
       screenDisplay = Column(
         children: [
-          Text("Mon profil"),
           Padding(
             padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
             child: PhysicalModel(
               borderRadius: BorderRadius.circular(20),
-              color: Colors.blue,
+              color: Colors.black,
               elevation: 18,
               shadowColor: Colors.black,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 child: Column(
                   children: [
@@ -185,40 +189,35 @@ class _Menu extends State<Menu> {
                       children: [
                         Text("${user.nom} ${user.prenom}"),
                         IconButton(
-                            onPressed: () => modifUser(user),
-                            icon: Icon(Icons.settings))
+                          onPressed: () => modifUser(user),
+                          icon: const Icon(Icons.settings),
+                        ),
+                        IconButton(
+                            onPressed: () => deconnexion(),
+                            icon: const Icon(Icons.exit_to_app))
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          children: [
-                            const Text("Rencontres"),
-                            Text("${user.rencontres.length}")
-                          ],
-                        ),
-                        Column(
-                          children: const [Text("Programmes"), Text("0")],
-                        )
-                      ],
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.07,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              const Text("Rencontres"),
+                              Text("${user.rencontres.length}")
+                            ],
+                          ),
+                          Column(
+                            children: const [Text("Programmes"), Text("0")],
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
               ),
             ),
-          ),
-          ContainerIYP(
-            text: Text(
-              'Hello, ${user.nom.toUpperCase()} ${user.prenom.toLowerCase()} !',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20, color: Colors.white),
-            ),
-            couleur: Couleur.gris,
-          ),
-          TextButton(
-            onPressed: deconnexion,
-            child: const Text("Déconnexion"),
           ),
           ContainerButtonIYP(couleur: Couleur.gris, children: [
             Text(
@@ -284,7 +283,7 @@ class _Menu extends State<Menu> {
         builder: (BuildContext context) {
           return StatefulBuilder(builder: (stfContext, stfSetState) {
             return AlertDialog(
-              title: const Text("Ajouter une nouvelle rencontre"),
+              title: const Text("Modification du profil"),
               content: Form(
                 key: _formKey,
                 child: Column(
@@ -355,7 +354,9 @@ class _Menu extends State<Menu> {
       isPush = true;
       clearColorButtonBottomAppBar();
       colorButtonMenu = Colors.white;
+
       loadDisplay();
+      titleAppBar = "Menu";
       await Future.delayed(Duration(milliseconds: 1000));
       screenDisplay = Column(
         children: <Widget>[

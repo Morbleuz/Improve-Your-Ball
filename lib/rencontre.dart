@@ -138,7 +138,7 @@ class _RencontreScreen extends State<RencontreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarIYP(),
+      appBar: const AppBarIYP(child: Text("Rencontres")),
       body: SingleChildScrollView(
         child: Column(children: listRencontres),
       ),

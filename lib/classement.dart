@@ -60,7 +60,7 @@ class _ClassementTroisPoint extends State<ClassementTroisPoint> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarIYP(),
+      appBar: const AppBarIYP(child: Text("Classement")),
       body: SingleChildScrollView(child: Center(child: page)),
     );
   }
@@ -118,7 +118,7 @@ class _ClassementDeuxPoint extends State<ClassementDeuxPoint> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarIYP(),
+      appBar: const AppBarIYP(child: Text("Classement")),
       body: SingleChildScrollView(child: Center(child: page)),
     );
   }
@@ -176,7 +176,7 @@ class _ClassementVictoire extends State<ClassementVictoire> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarIYP(),
+      appBar: const AppBarIYP(child: Text("Classement")),
       body: SingleChildScrollView(child: Center(child: page)),
     );
   }

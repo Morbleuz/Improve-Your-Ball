@@ -1,3 +1,5 @@
+import '../user.dart';
+
 ///Class permettant de faire les updates d'un user
 class UserUpdate {
   String? prenom;
