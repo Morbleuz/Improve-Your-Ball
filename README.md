@@ -48,7 +48,8 @@
     <li>
       <a href="#a-propos-du-projet">À propos du projet</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#creee-avec">Créée avec</a></li>
+        <li><a href="#mcd">MCD</a></li>
       </ul>
     </li>
     <li>
@@ -73,11 +74,12 @@
 
 [![Capture d'écran du menu][product-screenshot]](https://example.com)
 
-Ce projet à pour but le suivi personnel d'un joueur de BasketBall.   
+Ce projet à pour but le suivi personnel d'un joueur de BasketBall, .   
 En vous créant un compte, vous pourrez :
 * Ajouter vos rencontres 
 * Voir le classement au travers des utilisateurs 
 * Avoir un suivi de ses rencontres
+* Accéder à une page profil, en faire les modifications
 
 <p align="right">(<a href="#readme-top">Revenir en haut</a>)</p>
 
@@ -92,6 +94,19 @@ Ce projet à été créée avec :
 
 
 <p align="right">(<a href="#readme-top">Revenir en haut</a>)</p>
+
+
+### MCD
+
+Voici le MCD du projet :
+
+<div align="center">
+    <img src="assets/images/MCD.png" alt="MCD" width="200" height="200">
+</div>
+
+
+<p align="right">(<a href="#readme-top">Revenir en haut</a>)</p>
+
 
 
 
@@ -138,24 +153,17 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">Revenir en haut</a>)</p>
 
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
+- [ ] Ajouter la section Programme/Exercice
+- [ ] Ajouter les objectifs 
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">Revenir en haut</a>)</p>
 
 
 
