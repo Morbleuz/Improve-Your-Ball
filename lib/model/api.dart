@@ -101,7 +101,6 @@ class API {
     );
   }
 
-<<<<<<< HEAD
   static Future<void> sendUser(
       String username, String password, String prenom, String nom) async {
     final response = await http.post(
@@ -119,13 +118,9 @@ class API {
       }),
     );
 
-    ResponseCode = response.statusCode;
+    responseCode = response.statusCode;
   }
 
-  static String GetMessage() {
-    if (ResponseCode == 200) {
-      return "Succès";
-=======
   static String getMessage() {
     switch (responseCode) {
       case 200:
@@ -138,7 +133,6 @@ class API {
         return "Not Found";
       default:
         return "Code non connu : $responseCode";
->>>>>>> 9bab01bee2cd7b34a7b7b983ab2e10c6c9ea32a8
     }
   }
 }

@@ -21,15 +21,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/menu': (context) => const Menu(),
         '/login': (context) => const Login(),
-<<<<<<< HEAD
-        '/register': (context) => const Register(),
-        '/match': (context) => const RencontreScreen()
-=======
         '/match': (context) => const RencontreScreen(),
         '/classementTroisPoints': (context) => const ClassementTroisPoint(),
         '/classementDeuxPoints': (context) => const ClassementDeuxPoint(),
         '/classementVictoire': (context) => const ClassementVictoire(),
->>>>>>> 9bab01bee2cd7b34a7b7b983ab2e10c6c9ea32a8
       },
     );
   }

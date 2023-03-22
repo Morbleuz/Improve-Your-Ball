@@ -142,7 +142,6 @@ class _Login extends State<Login> {
             const Padding(
               padding: EdgeInsets.all(10),
             ),
-<<<<<<< HEAD
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               TextButton(
                 onPressed: goToRegister,
@@ -153,15 +152,6 @@ class _Login extends State<Login> {
                 child: const Text('Connexion'),
               )
             ])
-=======
-            ElevatedButton(
-              onPressed: connect,
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.orange),
-              ),
-              child: const Text('Connexion'),
-            )
->>>>>>> 9bab01bee2cd7b34a7b7b983ab2e10c6c9ea32a8
           ])
         ],
       )),

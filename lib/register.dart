@@ -114,7 +114,7 @@ class _Register extends State<Register> {
     }
     await API.sendUser(_controllerUsername.text, _controllerPassword.text,
         _controllerNom.text, _controllerPrenom.text);
-    if (API.ResponseCode == 201) {
+    if (API.responseCode == 201) {
       goToLogin();
     }
     setState(() {});
