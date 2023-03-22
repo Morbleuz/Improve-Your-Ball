@@ -86,6 +86,26 @@ class API {
     );
   }
 
+  static Future<void> sendUser(
+      String username, String password, String prenom, String nom) async {
+    final response = await http.post(
+      Uri.parse(Constant.url + Constant.urlPostUser),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: jsonEncode({
+        'username': username,
+        'password': password,
+        'prenom': prenom,
+        'nom': nom,
+        'roles': ['ROLE_USER']
+      }),
+    );
+
+    ResponseCode = response.statusCode;
+  }
+
   static String GetMessage() {
     if (ResponseCode == 200) {
       return "Succès";

@@ -4,6 +4,7 @@ abstract class Constant {
   static String urlToken = "/api/authentication_token";
   static String urlGetAllUser = "/api/users?page=1";
   static String urlPostRencontre = "/api/rencontres";
+  static String urlPostUser = "/api/users";
 
   ///Regex qui respecte la règle suivant
   ///Le champs doit avoir :
