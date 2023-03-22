@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_improve_your_ball/model/DTO/userUpdate.dart';
 import 'package:flutter_improve_your_ball/model/constant.dart';
 import 'package:flutter_improve_your_ball/model/local.dart';
 import 'package:flutter_improve_your_ball/model/rencontre.dart';
@@ -6,11 +7,10 @@ import 'package:flutter_improve_your_ball/model/user.dart';
 import 'package:http/http.dart' as http;
 
 class API {
-  static int? ResponseCode;
+  static int? responseCode;
 
   ///Récupération du token sur l'API en fonction du Username et du Password
   static Future<void> recupToken(String username, String password) async {
-    String token = "";
     try {
       final reponse = await http.post(
         Uri.parse(Constant.url + Constant.urlToken),
@@ -21,7 +21,7 @@ class API {
           <String, String>{'username': username, 'password': password},
         ),
       );
-      ResponseCode = reponse.statusCode;
+      responseCode = reponse.statusCode;
       if (reponse.statusCode == 200) {
         Local.localToken = jsonDecode(reponse.body)['token'];
       }
@@ -65,6 +65,21 @@ class API {
     return usersTrie.first;
   }
 
+  static Future<void> updateUser(int id, UserUpdate user) async {
+    print(id);
+    final response = await http.patch(
+      Uri.parse(Constant.url + Constant.urlUser + "/" + id.toString()),
+      headers: {
+        'Content-Type': 'application/merge-patch+json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${Local.localToken}',
+      },
+      body: jsonEncode({"prenom": user.prenom, "nom": user.nom}),
+    );
+    responseCode = response.statusCode;
+  }
+
+  ///Envoie une rencontre
   static Future<void> sendRencontre(Rencontre rencontre) async {
     var user = await getUserWithUsername(Local.LocalUsername);
     final response = await http.post(
@@ -86,6 +101,7 @@ class API {
     );
   }
 
+<<<<<<< HEAD
   static Future<void> sendUser(
       String username, String password, String prenom, String nom) async {
     final response = await http.post(
@@ -109,16 +125,20 @@ class API {
   static String GetMessage() {
     if (ResponseCode == 200) {
       return "Succès";
+=======
+  static String getMessage() {
+    switch (responseCode) {
+      case 200:
+        return "Succès";
+      case 401:
+        return "Non autorisé";
+      case 403:
+        return "Base Request";
+      case 404:
+        return "Not Found";
+      default:
+        return "Code non connu : $responseCode";
+>>>>>>> 9bab01bee2cd7b34a7b7b983ab2e10c6c9ea32a8
     }
-    if (ResponseCode == 401) {
-      return "Non autorisé";
-    }
-    if (ResponseCode == 403) {
-      return "Bad Request";
-    }
-    if (ResponseCode == 404) {
-      return "Not Found";
-    }
-    return "Code non connu : $ResponseCode";
   }
 }

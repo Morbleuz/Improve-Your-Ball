@@ -32,15 +32,13 @@ class _Login extends State<Login> {
     return null;
   }
 
-  ///Les vérifications du password
+  ///Les vérifications du Password
   String? get _errorPassord {
     final text = _controllerPassword.value.text;
     if (text.isEmpty && clickOnPassword) {
       return 'Ce champ ne doit pas être vide';
     }
-    if (clickOnPassword && !Constant.regexStrongPassword.hasMatch(text)) {
-      return 'Mot de passe non valide';
-    }
+
     // return null if the text is valid
     return null;
   }
@@ -78,7 +76,7 @@ class _Login extends State<Login> {
         errorMsg = "";
         goToMenu();
       } else {
-        errorMsg = API.GetMessage();
+        errorMsg = API.getMessage();
       }
     }
 
@@ -113,7 +111,10 @@ class _Login extends State<Login> {
               decoration: InputDecoration(
                 labelText: 'Username',
                 errorText: _errorUsername,
-                icon: const Icon(Icons.person),
+                icon: const Icon(
+                  Icons.person,
+                ),
+                suffixStyle: const TextStyle(color: Colors.green),
               ),
               onChanged: (text) => setState(() {
                 clickOnUsername = true;
@@ -132,7 +133,7 @@ class _Login extends State<Login> {
               }),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 2),
+              padding: const EdgeInsets.fromLTRB(0, 5, 0, 2),
               child: Text(
                 errorMsg,
                 style: const TextStyle(color: Color(0xFFF44336)),
@@ -141,6 +142,7 @@ class _Login extends State<Login> {
             const Padding(
               padding: EdgeInsets.all(10),
             ),
+<<<<<<< HEAD
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               TextButton(
                 onPressed: goToRegister,
@@ -151,6 +153,15 @@ class _Login extends State<Login> {
                 child: const Text('Connexion'),
               )
             ])
+=======
+            ElevatedButton(
+              onPressed: connect,
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.orange),
+              ),
+              child: const Text('Connexion'),
+            )
+>>>>>>> 9bab01bee2cd7b34a7b7b983ab2e10c6c9ea32a8
           ])
         ],
       )),

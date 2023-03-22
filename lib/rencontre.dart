@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_improve_your_ball/model/couleur.dart';
 import 'package:flutter_improve_your_ball/model/extension.dart';
 import 'package:flutter_improve_your_ball/model/api.dart';
 import 'package:flutter_improve_your_ball/model/local.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_improve_your_ball/model/rencontre.dart';
 import 'package:flutter_improve_your_ball/model/user.dart';
 import 'package:flutter_improve_your_ball/modelView/appbarIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/containerIYP.dart';
+import 'package:http/http.dart';
 
 import 'modelView/containerRencontre.dart';
 
@@ -27,6 +29,9 @@ class _RencontreScreen extends State<RencontreScreen> {
   int minuteJouer = 0;
   int nombreDeFautes = 0;
 
+  //Est-ce que l'utilisateur à appliquer un filtre
+  String? filter;
+
   List<Widget> listRencontres = [];
 
   ///Lorsque la fenêtre s'ouvre, exécution de méthodes...
@@ -35,6 +40,18 @@ class _RencontreScreen extends State<RencontreScreen> {
     // TODO: implement initState
     super.initState();
     getMatch();
+  }
+
+  void looseFilter() {
+    filter == "Loose" ? filter = null : filter = "Loose";
+    getMatch();
+    setState(() {});
+  }
+
+  void winFilter() {
+    filter == "Win" ? filter = null : filter = "Win";
+    getMatch();
+    setState(() {});
   }
 
   ///Fonction pour envoyer le match dans la fenêtre de dialogue
@@ -56,14 +73,64 @@ class _RencontreScreen extends State<RencontreScreen> {
 
   ///Récupère la liste des matchs du User connecté
   Future<void> getMatch() async {
-    //On vide la list de Recontres
+    //On vide la list de Rencontres
     listRencontres = [];
     User user = await API.getUserWithUsername(Local.LocalUsername);
-    for (Rencontre r in user.rencontres) {
-      listRencontres.add(ContainerRencontre(
-        rencontre: r,
-      ));
+    if (user.rencontres.isEmpty) {
+      listRencontres.add(
+        ContainerIYP(
+          couleur: Couleur.gris,
+          text: const Text(
+            "Vous n'avez aucune rencontre. \n Ajoutez de nouvelles rencontres en cliquant sur le bouton en bas à droite.",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20, color: Colors.white),
+          ),
+        ),
+      );
     }
+
+    if (listRencontres.isEmpty) {
+      listRencontres.add(
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.02,
+        ),
+      );
+      listRencontres.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ElevatedButton(
+            onPressed: looseFilter,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red),
+            ),
+            child: const Text("Défaites"),
+          ),
+          ElevatedButton(
+            onPressed: winFilter,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.green),
+            ),
+            child: const Text("Victoires"),
+          ),
+        ],
+      ));
+      for (Rencontre r in user.rencontres) {
+        if (filter == "Win") {
+          r.gagner
+              ? listRencontres.add(ContainerRencontre(rencontre: r))
+              : null;
+        } else if (filter == "Loose") {
+          !r.gagner
+              ? listRencontres.add(ContainerRencontre(rencontre: r))
+              : null;
+        } else {
+          listRencontres.add(ContainerRencontre(
+            rencontre: r,
+          ));
+        }
+      }
+    }
+
     setState(() {});
   }
 
@@ -71,11 +138,13 @@ class _RencontreScreen extends State<RencontreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarIYP(),
+      appBar: const AppBarIYP(child: Text("Rencontres")),
       body: SingleChildScrollView(
         child: Column(children: listRencontres),
       ),
       floatingActionButton: FloatingActionButton(
+        hoverElevation: 2.0,
+        backgroundColor: Colors.green,
         onPressed: () => addRencontre(context),
         child: const Icon(Icons.add),
       ),

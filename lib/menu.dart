@@ -1,14 +1,13 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_improve_your_ball/model/DTO/userUpdate.dart';
 import 'package:flutter_improve_your_ball/model/local.dart';
 import 'package:flutter_improve_your_ball/modelView/ContainerButtonIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/appbarIYP.dart';
 import 'package:flutter_improve_your_ball/modelView/containerIYP.dart';
-import 'package:graphic/graphic.dart';
 import 'data/recontre_data.dart';
 import 'model/api.dart';
 import 'model/couleur.dart';
-import 'model/local.dart';
 import 'model/user.dart';
 
 class Menu extends StatefulWidget {
@@ -23,11 +22,14 @@ class _Menu extends State<Menu> {
   bool isPush = false;
   late Column screenDisplay;
   late Color colorButtonMenu;
-  late Color colorButtonTest;
+  late Color colorButtonClassement;
   late Color colorButttonProfile;
   double sumTimePlay = 0;
   double sumThreePoints = 2;
   double sumTwoPoints = 9;
+  final _formKey = GlobalKey<FormState>();
+  UserUpdate userToUpdate = UserUpdate();
+  String titleAppBar = "Menu";
 
   @override
   void initState() {
@@ -39,8 +41,23 @@ class _Menu extends State<Menu> {
   ///Fonction pour remettre tout les boutons à la couleur noir.
   void clearColorButtonBottomAppBar() {
     colorButtonMenu = Colors.black;
-    colorButtonTest = Colors.black;
+    colorButtonClassement = Colors.black;
     colorButttonProfile = Colors.black;
+  }
+
+  void updateUser() async {
+    loadDisplay();
+    User user = await API.getUserWithUsername(Local.LocalUsername);
+    await API.updateUser(user.id, userToUpdate);
+    profileDisplay();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Modification de votre profil effectué ✅',
+        ),
+        duration: Duration(milliseconds: 1000),
+      ),
+    );
   }
 
   @override
@@ -59,9 +76,9 @@ class _Menu extends State<Menu> {
                 color: colorButtonMenu,
               ),
               IconButton(
-                onPressed: testDisplay,
-                icon: const Icon(Icons.border_vertical_outlined),
-                color: colorButtonTest,
+                onPressed: classementDisplay,
+                icon: const Icon(Icons.groups_2),
+                color: colorButtonClassement,
               ),
               IconButton(
                 onPressed: profileDisplay,
@@ -70,19 +87,64 @@ class _Menu extends State<Menu> {
               )
             ],
           )),
-      appBar: AppBarIYP(),
+      appBar: AppBarIYP(
+        child: Text(titleAppBar),
+      ),
       body: SingleChildScrollView(
         child: Center(child: screenDisplay),
       ),
     );
   }
 
-  void testDisplay() {
-    clearColorButtonBottomAppBar();
-    colorButtonTest = Colors.white;
-    screenDisplay = Column(
-      children: [Text('test')],
-    );
+  void classementDisplay() {
+    if (!isPush) {
+      isPush = true;
+      clearColorButtonBottomAppBar();
+      colorButtonClassement = Colors.white;
+      titleAppBar = "Classement";
+      screenDisplay = Column(
+        children: [
+          ContainerButtonIYP(
+            couleur: Couleur.gris,
+            children: [
+              const Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Text("Voir le classement des 3 points")),
+              ElevatedButton(
+                onPressed: goToClassementTroisPoints,
+                child: const Text("Voir classement"),
+              ),
+            ],
+          ),
+          ContainerButtonIYP(
+            couleur: Couleur.gris,
+            children: [
+              const Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Text("Voir le classement des 2 points")),
+              ElevatedButton(
+                onPressed: goToClassementDeuxPoints,
+                child: const Text("Voir classement"),
+              ),
+            ],
+          ),
+          ContainerButtonIYP(
+            couleur: Couleur.gris,
+            children: [
+              const Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Text("Voir le classement des victoires")),
+              ElevatedButton(
+                onPressed: goToClassementVictoires,
+                child: const Text("Voir classement"),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
+    isPush = false;
+
     setState(() {});
   }
 
@@ -103,23 +165,61 @@ class _Menu extends State<Menu> {
       isPush = true;
       clearColorButtonBottomAppBar();
       colorButttonProfile = Colors.white;
+      titleAppBar = "Profile";
       loadDisplay();
       User user = await API.getUserWithUsername(Local.LocalUsername);
       screenDisplay = Column(
         children: [
-          ContainerIYP(
-            text: Text(
-              'Hello, ${user.username} !',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20, color: Colors.white),
+          Padding(
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+            child: PhysicalModel(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.black,
+              elevation: 18,
+              shadowColor: Colors.black,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text("${user.nom} ${user.prenom}"),
+                        IconButton(
+                          onPressed: () => modifUser(user),
+                          icon: const Icon(Icons.settings),
+                        ),
+                        IconButton(
+                            onPressed: () => deconnexion(),
+                            icon: const Icon(Icons.exit_to_app))
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.07,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              const Text("Rencontres"),
+                              Text("${user.rencontres.length}")
+                            ],
+                          ),
+                          Column(
+                            children: const [Text("Programmes"), Text("0")],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
-            couleur: Couleur.rouge,
           ),
-          TextButton(
-            onPressed: deconnexion,
-            child: const Text("Déconnexion"),
-          ),
-          ContainerButtonIYP(couleur: Couleur.rouge, children: [
+          ContainerButtonIYP(couleur: Couleur.gris, children: [
             Text(
               "Vous avez ${user.rencontres.length} rencontres !",
               textAlign: TextAlign.center,
@@ -155,11 +255,90 @@ class _Menu extends State<Menu> {
     });
   }
 
+  ///Fonction pour accèder à l'écran classement 3 points
+  void goToClassementTroisPoints() {
+    setState(() {
+      Navigator.pushNamed(context, '/classementTroisPoints');
+    });
+  }
+
+  ///Fonction pour accèder à l'écran classement 2 points
+  void goToClassementDeuxPoints() {
+    setState(() {
+      Navigator.pushNamed(context, '/classementDeuxPoints');
+    });
+  }
+
+  ///Fonction pour accèder à l'écran classement en rapport avec les victoires
+  void goToClassementVictoires() {
+    setState(() {
+      Navigator.pushNamed(context, '/classementVictoire');
+    });
+  }
+
+  ///Modif un User
+  modifUser(User user) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(builder: (stfContext, stfSetState) {
+            return AlertDialog(
+              title: const Text("Modification du profil"),
+              content: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextFormField(
+                      initialValue: user.nom,
+                      decoration: const InputDecoration(hintText: 'Nom'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Champs vide';
+                        }
+                        userToUpdate.nom = value;
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: user.prenom,
+                      decoration: const InputDecoration(hintText: 'Prénom'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Champs vide';
+                        }
+                        userToUpdate.prenom = value;
+                        return null;
+                      },
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            updateUser();
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: const Text('Envoyer'))
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Fermer"))
+              ],
+            );
+          });
+        });
+  }
+
   ///Pour afficher l'écran de chargement
   void loadDisplay() {
     screenDisplay = Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+      children: const [
         Padding(padding: EdgeInsets.all(10)),
         CircularProgressIndicator(
           color: Colors.orange,
@@ -175,7 +354,9 @@ class _Menu extends State<Menu> {
       isPush = true;
       clearColorButtonBottomAppBar();
       colorButtonMenu = Colors.white;
+
       loadDisplay();
+      titleAppBar = "Menu";
       await Future.delayed(Duration(milliseconds: 1000));
       screenDisplay = Column(
         children: <Widget>[
@@ -185,7 +366,7 @@ class _Menu extends State<Menu> {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
-            couleur: Couleur.rouge,
+            couleur: Couleur.gris,
           ),
           //Section match
           ContainerButtonIYP(
@@ -204,7 +385,7 @@ class _Menu extends State<Menu> {
           ),
           //Section classement
           ContainerButtonIYP(
-            couleur: Couleur.rouge,
+            couleur: Couleur.gris,
             children: const [
               Text(
                 'Vous souhaitez voir le classement \n et vous comparez avec les utilisateurs ? \n Appusez le bouton pour accéder au classement',

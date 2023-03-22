@@ -10,9 +10,6 @@ class Rencontre {
   Rencontre(this.id, this.nombreDeuxPoint, this.nombreTroisPoints,
       this.nombreRebonds, this.minuteJouer, this.gagner, this.nombreDeFautes);
 
-  ///Créer une Rencontre en fonction d'un Json
-  ///TODO
-
   static Rencontre fromJson(Map<String, dynamic> json) {
     return Rencontre(
         json["id"],
