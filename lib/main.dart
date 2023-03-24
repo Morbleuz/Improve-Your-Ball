@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         '/menu': (context) => const Menu(),
         '/login': (context) => const Login(),
         '/match': (context) => const RencontreScreen(),
+        '/register': (context) => const Register(),
         '/classementTroisPoints': (context) => const ClassementTroisPoint(),
         '/classementDeuxPoints': (context) => const ClassementDeuxPoint(),
         '/classementVictoire': (context) => const ClassementVictoire(),

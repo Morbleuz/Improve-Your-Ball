@@ -6,7 +6,7 @@ import 'package:flutter_improve_your_ball/model/rencontre.dart';
 import 'package:flutter_improve_your_ball/model/user.dart';
 import 'package:http/http.dart' as http;
 
-class API {
+abstract class API {
   static int? responseCode;
 
   ///Récupération du token sur l'API en fonction du Username et du Password
