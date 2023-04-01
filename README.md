@@ -52,14 +52,8 @@
         <li><a href="#mcd">MCD</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -112,23 +106,14 @@ Voici le MCD du projet :
 
 
 
+Pour pouvoir installer l'application, suivez ce tutoriel.
+## Prerequis 
 
-<!-- GETTING STARTED -->
-## Getting Started
+Pour pouvoir utiliser l'application, il vous faut une API Improve Your Ball fonctionnelle.
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Il faut égalemment Flutter installer sur votre machine.
 
-### Prerequis 
-
-Pour pouvoir utiliser l'application il vous faut une API
-
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
+## Installation
 
 Un exemple d'installation sur une machine 
 
@@ -152,18 +137,6 @@ Un exemple d'installation sur une machine
    ```
 
 <p align="right">(<a href="#readme-top">Revenir en haut</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">Revenir en haut</a>)</p>
-
 
 
 <!-- Ajout à venir -->
