@@ -98,7 +98,7 @@ Ce projet à été créée avec :
 Voici le MCD du projet :
 
 <div align="center">
-    <img src="assets/images/MCD.png" alt="MCD" width="200" height="200">
+    <img src="assets/images/MCD.png" alt="MCD" width="500" height="500">
 </div>
 
 
